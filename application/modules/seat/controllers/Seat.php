@@ -91,7 +91,7 @@ class Seat extends MY_Controller{
         if($sid == TRUE)
         {
             $data['seat'] = $this->seat_model->get_id($sid);
-            $this->title_page("Layout");
+            $this->title_page("Layout ".$data['seat']->jumlah_kursi." Kursi");
             $this->page_sub_center_large("seat/options/layout.php",$data);
         }else{
             
@@ -138,19 +138,30 @@ class Seat extends MY_Controller{
             }
         }else if($this->input->post('submit') == "update"){
             $post = (object) $_POST;
-            $data = array(
-                'id_jml_kursi'=>$post->sid,
-                'nomor_layout'=>$post->nomor_layout,
+            $data_update = array(
                 'nomor_kursi'=>$post->nomor_kursi,
                 'id_status'=>$post->id_status,
             );
 
             $cek_layout = $this->seat_model->cek_block($post->sid,$post->nomor_layout);
             if($cek_layout == TRUE){
-                echo "update";
-            }else{
-                $insert = $this->seat_model->insert_block($data);
-                if($insert == TRUE)
+                $update = $this->seat_model->update_block($data_update,$post->sid,$post->nomor_layout);
+                if($update == TRUE)
+                {        
+                    redirect('seat/layout?sid='.$post->sid.'','refresh');           
+                }
+            }
+        }else if($this->input->post('submit') =='remove'){
+            $post = (object) $_POST;
+            $data_update = array(
+                'nomor_kursi'=>$post->nomor_kursi,
+                'id_status'=>$post->id_status,
+            );
+
+            $cek_layout = $this->seat_model->cek_block($post->sid,$post->nomor_layout);
+             if($cek_layout == TRUE){
+                $remove = $this->seat_model->remove_block($post->sid,$post->nomor_layout);
+                if($remove == TRUE)
                 {        
                     redirect('seat/layout?sid='.$post->sid.'','refresh');           
                 }

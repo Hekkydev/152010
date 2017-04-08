@@ -61,6 +61,18 @@ class Seat_model extends CI_Model
     {
         return $this->db->insert('p_mobil_kursi_layout',$data);
     }
+
+    public function update_block($data,$sid,$nomor_layout)
+    {
+         return $this->db->update('p_mobil_kursi_layout',$data,$where = array('id_jml_kursi'=>$sid,'nomor_layout'=>$nomor_layout));
+    }
+
+    public function remove_block($sid,$nomor_layout)
+    {
+        $this->db->where('id_jml_kursi',$sid);
+        $this->db->where('nomor_layout',$nomor_layout);
+        return $this->db->delete('p_mobil_kursi_layout');
+    }
 }
 
 
