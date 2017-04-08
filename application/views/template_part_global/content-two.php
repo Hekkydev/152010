@@ -14,7 +14,7 @@ echo $sidemenu;;
 <div class="row">
     <div class="col-xs-offset-1 col-lg-10">
         <div class="panel">
-            <div class="panel-heading" style="text-align:center; background:#731b89;">
+            <div class="panel-heading bg-purple" align="center">
                 <h3 style="color:#FFF; font-weight:bold;"><?php echo $title ?></h3>
             </div> <!-- /panel-heading -->
             <div class="panel-body m-t-0">
