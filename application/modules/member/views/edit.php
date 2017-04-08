@@ -13,10 +13,17 @@ $ID = array(
     'readonly'=>TRUE,
 
 );
+
+$sid = array(
+  'name' =>'sid',
+  'type'=>'hidden',
+  'value'=>$member->uuid_member,
+  );
 ?>
 
 <div class="member">
   <?php echo form_open('member/insert',$form); ?>
+  <?php echo form_input($sid);?>
     <div class="row">
       <div class="col-xs-offset-2 col-lg-7">
         <div class="form-group">
