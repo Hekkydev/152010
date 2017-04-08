@@ -14,7 +14,7 @@ class Seat extends MY_Controller{
   {
         $data['kursi'] = $this->KursiMobil;
         $this->title_page("Kursi Mobil");
-        $this->page_sub_center_large("page",$data);
+        $this->page_sub("page",$data);
   }
 
 }
