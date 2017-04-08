@@ -57,6 +57,11 @@ class Seat_model extends CI_Model
         return $this->db->get_where('p_mobil_kursi_layout')->first_row();
     }
 
+    public function insert($data)
+    {
+        return $this->db->isnert($this->table,$data);
+    }
+
     public function insert_block($data)
     {
         return $this->db->insert('p_mobil_kursi_layout',$data);

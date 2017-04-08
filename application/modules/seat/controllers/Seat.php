@@ -100,6 +100,31 @@ class Seat extends MY_Controller{
         }
     }
 
+    public function add()
+    {
+            $this->title_page("Tambah Data Seat");
+            $this->page_sub_center_large("seat/add");
+    }
+
+    public function insert()
+    {
+            $post = (object) $_POST;
+            $data = array(
+                'jumlah_kursi'=>$post->jumlah_kursi,
+                'jumlah_block'=>$post->jumlah_block,
+                'tipe_kelas'=>$post->tipe_kelas,
+                'tipe_layout'=>$post->tipe_layout,
+            );
+            $simpan = $this->seat_model->insert($data);
+
+            if($simpan == TRUE)
+            {
+                
+                redirect($this->seat,'refresh');
+                
+            }
+    }
+
     public function load_setting_layout()
     {   
         $post = (object) $_POST;
