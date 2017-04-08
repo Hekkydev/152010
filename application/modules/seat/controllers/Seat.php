@@ -166,6 +166,10 @@ class Seat extends MY_Controller{
                     redirect('seat/layout?sid='.$post->sid.'','refresh');           
                 }
             }
+        }else if($this->input->post('submit') == "close")
+        {
+             $post = (object) $_POST;
+             redirect('seat/layout?sid='.$post->sid.'','refresh');    
         }
 
    
