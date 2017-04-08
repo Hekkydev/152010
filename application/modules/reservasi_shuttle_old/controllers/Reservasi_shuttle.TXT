@@ -1,0 +1,393 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Reservasi_shuttle extends MY_Controller{
+
+  public function __construct()
+  {
+        parent::__construct();
+        $this->Authentikasi           = $this->Authentikasi();
+        $this->AllKota                = $this->AllKota()->result();
+        $this->AllMobil               = $this->AllMobil()->result();
+        $this->AllSopir               = $this->AllSopir()->result();
+
+  }
+
+  function index()
+  {
+        $data['mobil']  = $this->AllMobil;
+        $data['sopir']  = $this->AllSopir;
+        $data['kota']   = $this->AllKota;
+        $this->page_form("page",$data);
+  }
+
+  // AJAX REQUEST POINT KEBERANGKATAN //
+  function point_keberangkatan()
+  {
+        $UUID_kota = $this->input->post('kota',TRUE);
+    	  if($UUID_kota == TRUE):
+    			$cabang = cabang_helper($UUID_kota)->result();
+          foreach($cabang as $cb):
+    				echo '<option value="'.$cb->uuid_cabang.'">'.$cb->nama_cabang.'</option>';
+    			endforeach;
+    	  else:
+    			$this->AlertRequest("Tentukan Asal Keberangkatan","confirm");
+    	  endif;
+  }
+
+  function tujuan_keberangkatan()
+  {
+        $UUID_kota = $this->input->post('kota',TRUE);
+    	  $UUID_asal = $this->input->post('asal',TRUE);
+
+    	  $tujuan = TujuanCabang($UUID_kota,$UUID_asal);
+    	  foreach($tujuan as $cb):
+    				echo '<option value="'.$cb->uuid_cabang.'">'.$cb->nama_cabang.'</option>';
+    	  endforeach;
+  }
+
+  function search_jadwal()
+  {
+        $data['tgl_berangkat'] = $this->input->post('tgl_berangkat');
+        $data['point']  = $this->input->post('asal_keberangkatan');
+        $data['tujuan'] = $this->input->post('tujuan_keberangkatan');
+        $point          =  $data['point'];
+        $tujuan         = $data['tujuan'];
+        $data['jadwal_keberangkatan'] = $this->jadwal_model->get_jadwal_keberangkatan($point,$tujuan);
+        $this->page_load('jadwal/data_jadwal',$data);
+  }
+
+  function detail_jadwal()
+  {
+        $data['tgl_berangkat'] = $this->input->post('tgl_berangkat');
+        $data['kode_jadwal']  = $this->input->post('kode_jadwal');
+        $data['point'] = $this->input->post('asal_keberangkatan');
+        $data['tujuan'] = $this->input->post('tujuan_keberangkatan');
+        $data['jam'] = $this->input->post('jam');
+        $data['kode'] = $this->input->post('kode');
+        $data['jadwal_keberangkatan'] = $this->jadwal_model->get_detail_jadwal_keberangakatan($data['kode_jadwal']);
+        $this->page_load('jadwal/detail_jadwal',$data);
+  }
+
+  function read_cookies()
+  {
+        $total_memilih  = explode(",",$_COOKIE['selection_seat']);
+        sort($total_memilih);
+        foreach ($total_memilih as $v) {
+          if(!empty($v) || $v != NULL || $v != ""){
+            echo "<label>Nomor Kursi : ".$v."</label><br>";
+          }
+
+        }
+  }
+
+  function read_cookies_total()
+  {
+      $total = $_COOKIE['total_seat'];
+      echo '<div class="form-group">';
+          echo '<label for="" class="control-label">';
+          echo '<span> Jumlah Kursi yang di pesan : '.$total.'</span>';
+          echo '</label>';
+      echo '</div>';
+      if($total > 0){
+      echo '<a  class="checkout btn btn-sm bg-purple tooltips" onclick="customer_add()" data-toggle="tooltip" data-placement="bottom" title="Proses Checkout">
+           PROSES CHECKOUT
+         </a>';
+      }
+  }
+
+  function new_customer_form()
+  {
+            $jenis_kursi = $this->input->post('jenis_kursi');
+            $point_berangkat = $this->input->post('point_berangkat');
+            $tujuan_berangkat = $this->input->post('tujuan_berangkat');
+            $j_penumpang = $this->input->post('jenis_penumpang');
+            if($j_penumpang == TRUE){
+              $data['jenis_penumpang'] = $j_penumpang;
+            }else{
+              $data['jenis_penumpang'] = "";
+            }
+            $data['harga_tiket'] = $this->cek_harga_penumpang($jenis_kursi,$point_berangkat,$tujuan_berangkat,$j_penumpang);
+            $this->load->view('checkout/new_customers',$data);
+  }
+
+  function detail_customers()
+  {
+            $kode_booking = $this->input->post('kode_booking');
+            $kode_atr = $this->input->post('kode_atr');
+            $jam = $this->input->post('jam');
+            $data['penumpang'] = $this->get_DetailPenumpang_by_kode_booking($kode_booking);
+
+            $jenis_kursi = $this->input->post('jenis_kursi');
+            $point_berangkat = $this->input->post('point_berangkat');
+            $tujuan_berangkat = $this->input->post('tujuan_berangkat');
+
+            $j_penumpang = $data['penumpang']->jenis_penumpang;
+            if($j_penumpang == TRUE){
+              $data['jenis_penumpang'] = $j_penumpang;
+            }else{
+              $data['jenis_penumpang'] = "";
+            }
+
+            $data['jadwal_detail'] = $kode_atr." / ".$jam;
+            $data['harga_tiket'] = $this->cek_harga_penumpang($jenis_kursi,$point_berangkat,$tujuan_berangkat,$j_penumpang);
+            //print_r($data['penumpangx']); die();
+            $this->page_load('checkout/detail_customers',$data);
+  }
+
+
+  function update_data_customers()
+  {
+                $nomor_kursi = $this->input->post('nomor_kursi');
+                $kode_booking = $this->input->post('kode_booking');
+                $no_tiket = $this->input->post('no_tiket');
+                $kode_member = $this->input->post('kode_member');
+                $no_handphone = $this->input->post('no_handphone');
+                $nama_penumpang = $this->input->post('nama_penumpang');
+                $jenis_penumpang_harga = $this->input->post('jenis_penumpang_harga',TRUE);
+                $keterangan_penumpang = $this->input->post('keterangan_penumpang',TRUE);
+
+                $kode = str_replace("#","",$kode_booking);
+                $penumpang = explode('-',$jenis_penumpang_harga);
+                $jenis_penumpang = $penumpang[0]; //jenis_penumpang
+                $tarif_penumpang = $penumpang[1]; // tarif_penumpang
+
+
+                $data_penumpang = array(
+                  'kode_member'=>$kode_member,
+                  'nama_penumpang'=>$nama_penumpang,
+                  'no_telp_penumpang'=>$no_handphone,
+                  'keterangan_penumpang'=>$keterangan_penumpang,
+                  'jenis_penumpang'=>$jenis_penumpang,
+                  'tarif_penumpang'=>$tarif_penumpang,
+                );
+
+
+                $update = $this->reservasi_model->update_penumpang($data_penumpang,$kode,$nomor_kursi);
+                if($update == TRUE)
+                {
+                  echo $kode;
+                }else {
+                  echo "error";
+                }
+
+  }
+
+  // -----------------------CEK HARGA PENUMPANG ------------------------------------------//
+  function cek_harga_penumpang($jenis_kursi,$point_berangkat,$tujuan_berangkat,$j_penumpang)
+  {
+            $result = cek_harga_jadwal($jenis_kursi,$point_berangkat,$tujuan_berangkat);
+            // bisa di tambahkan dengan harga cabang promo lainnnya
+            $response = array(
+              'umum'=>$result->umum,
+              'mahasiwa'=>$result->mahasiswa,
+              'promo'=>$result->promo,
+            );
+            $harga = $response;
+            return $harga;
+  }
+
+  // CHECKING MEMBER///////////////////////////////////////////////////////////
+
+
+  function get_kode_member_cheking()
+  {
+            $kode_member = $this->input->post('kode_member');
+            $arr_criteria = array('kode_member'=>$kode_member);
+            $cheking = $this->db->get_where('p_member', $arr_criteria)->num_rows();
+            print($cheking);
+  }
+
+  function get_kode_member_cheking_display()
+  {
+            $kode_member = $this->input->post('kode_member');
+            $arr_criteria = array('kode_member'=>$kode_member);
+            $cheking = $this->db->get_where('p_member', $arr_criteria)->first_row();
+            if($cheking == TRUE):
+            echo json_encode($cheking);
+            else:
+            $cheking = (object) array();
+            echo json_encode($cheking);
+            endif;
+  }
+  function get_notelp_cheking()
+  {
+            $no_handphone = $this->input->post('no_handphone');
+            $arr_criteria = array('no_handphone'=>$no_handphone);
+            $cheking = $this->db->get_where('p_member', $arr_criteria)->first_row();
+            if($cheking == TRUE):
+            echo json_encode($cheking);
+            else:
+            $cheking = (object) array();
+            echo json_encode($cheking);
+            endif;
+  }
+
+// ---------------------BATALKAN TIKET-------------------------------------------------//
+
+
+function pembatalan_tiket()
+  {
+            $kode_booking = $this->input->post('kode_booking');
+            $kode = str_replace("#","",$kode_booking);
+            $data = array(
+              'id_status_pemesanan_shuttle'=>3, // nomor 3 di batalkan
+              'deleted_date'=>$this->waktu_skr(),
+            );
+            $where = array('kode_jadwal_reservasi_shuttle'=>$kode);
+            $update = $this->db->update('p_reservasi_shuttle_detail',$data,$where);
+            if($update == TRUE)
+            {
+              echo "success";
+            }else{
+              echo "error";
+            }
+  }
+
+  // --------------------MUTASI PENUMPANG-----------------------------------------------//
+  function mutasi_penumpang()
+  {
+          $kode_booking = $this->input->post('kode_booking');
+          $no_kursi = $this->input->post('no_kursi');
+
+          $kode = str_replace("#","",$kode_booking);
+          $data = array(
+            'id_kursi_shuttle'=>$no_kursi,
+            'last_change_date'=>$this->waktu_skr(),
+          );
+
+          $where = array('kode_jadwal_reservasi_shuttle'=>$kode);
+          $update = $this->db->update('p_reservasi_shuttle_detail',$data,$where);
+          if($update == TRUE)
+          {
+            echo "success";
+          }else{
+            echo "error";
+          }
+  }
+
+
+
+
+  function booking_add()
+  {
+
+        $kode_manifest = $this->input->post('kode_manifest');
+        $kode_jadwal = $this->input->post('kode_jadwal');
+        $tgl_reservasi = $this->input->post('tanggal_req');
+        $nama_penumpang = $this->input->post('nama_penumpang');
+        $kode_member  = $this->input->post('kode_member');
+        $no_handphone   = $this->input->post('no_handphone');
+        $jenis_penumpang_harga = $this->input->post('jenis_penumpang_harga');
+        $keterangan = $this->input->post('keterangan');
+        $total_seat = $this->input->post('total_seat');
+        $nomor_kursi = $this->input->post('nomor_kursi');
+        $kode_cso =  $this->input->post('kode_cso');
+
+        $kode_booking = $this->AutoKodeBooking();
+        $kode_tiket = $this->AutoKodeReservasi();
+
+        $select_nomor_kursi = explode(",",$nomor_kursi);
+        if($total_seat == 1):
+              $booking_now = $this->booking_proses($kode_booking,
+                                                   $kode_tiket,
+                                                   $kode_manifest,
+                                                   $kode_jadwal,
+                                                   $tgl_reservasi,
+                                                   $nama_penumpang,
+                                                   $kode_member,
+                                                   $no_handphone,
+                                                   $jenis_penumpang_harga,
+                                                   $keterangan,
+                                                   $total_seat,
+                                                   $nomor_kursi,
+                                                   $kode_cso);
+        elseif($total_seat > 1 ):
+          foreach($select_nomor_kursi as $key=>$val):
+              $nomor_kursi_value = $val;
+              $total_seat_new = 1;
+              $booking_now = $this->booking_proses($kode_booking,
+                                                   $kode_tiket,
+                                                   $kode_manifest,
+                                                   $kode_jadwal,
+                                                   $tgl_reservasi,
+                                                   $nama_penumpang,
+                                                   $kode_member,
+                                                   $no_handphone,
+                                                   $jenis_penumpang_harga,
+                                                   $keterangan,
+                                                   $total_seat_new,
+                                                   $nomor_kursi_value,
+                                                   $kode_cso);
+          endforeach;
+        endif;
+
+  }
+
+
+  function booking_proses($kode_booking,$kode_tiket,$kode_manifest,$kode_jadwal,$tgl_reservasi,$nama_penumpang,$kode_member,$no_handphone,$jenis_penumpang_harga,$keterangan,$total_seat,$nomor_kursi,$kode_cso)
+  {
+
+
+          $kode_status = 1;
+
+          $penumpang = explode('-',$jenis_penumpang_harga);
+          $jenis_penumpang = $penumpang[0]; //jenis_penumpang
+          $tarif_penumpang = $penumpang[1]; // tarif_penumpang
+
+          $jadwal = $this->jadwal_model->get_detail_jadwal_keberangakatan($kode_jadwal);
+
+          $dataReservasiKode = array(
+            'kode_booking'=>$kode_booking,
+          );
+
+          $dataReservasiKode_tiket = array(
+            'kode_tiket'=>$kode_tiket,
+          );
+
+          $dataReservasi = array(
+            'kode_jadwal_reservasi_shuttle' =>$kode_booking,
+            'kode_jadwal'=>$kode_jadwal,
+            'tgl_reservasi_shuttle'=>$tgl_reservasi,
+            'jam'=>$jadwal->jam,
+            'menit'=>$jadwal->menit,
+            'created_date'=>$this->waktu_skr(),
+           );
+
+          $dataReservasi_detail = array(
+            'id_status_pemesanan_shuttle'=>$kode_status,
+            'id_reservasi_shuttle_tipe'=>1, // status tipe di booking
+            'id_kursi_shuttle'=>$nomor_kursi,
+            'kode_manifest'=>$kode_manifest,
+            'kode_tiket'=>$kode_tiket,
+            'kode_jadwal_reservasi_shuttle' =>$kode_booking,
+            'kode_jadwal'=>$kode_jadwal,
+            'uuid_user'=>$kode_cso,
+            'kode_member'=>$kode_member,
+            'nama_penumpang'=>$nama_penumpang,
+            'no_telp_penumpang'=>$no_handphone,
+            'keterangan_penumpang'=>$keterangan,
+            'jenis_penumpang'=>$jenis_penumpang,
+            'tarif_penumpang'=>$tarif_penumpang,
+            'tgl_pemesanan_tiket'=>$this->waktu_skr(),
+            'created_date'=>$this->waktu_skr(),
+          );
+
+          $table = 'p_reservasi_shuttle';
+          $table_detail = 'p_reservasi_shuttle_detail';
+          $table_kode = 'p_reservasi_shuttle_kode_booking';
+          $table_kode_tiket = 'p_reservasi_shuttle_kode_tiket';
+          $simpan = $this->db->insert($table,$dataReservasi);
+          if($simpan){
+            $simpan1 = $this->db->insert($table_detail,$dataReservasi_detail);
+            if($simpan1){
+                $simpan2 = $this->db->insert($table_kode,$dataReservasiKode);
+                $simpan3 = $this->db->insert($table_kode_tiket,$dataReservasiKode_tiket);
+            }
+          }
+  }
+
+
+
+
+}

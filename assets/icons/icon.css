@@ -1,0 +1,60 @@
+.str0 {stroke:#333;stroke-width:15}
+.str2 {stroke:#333;stroke-width:7}
+.str1 {stroke:#333;stroke-width:9}
+
+.svg {
+    fill: none;
+    width: 80%;
+    clear: both;
+    text-align: center;
+    transition: all 250ms ease-out;
+}
+.menuicon{
+    padding: 10px;
+    text-align: center;
+  	transition: all 250ms ease-out;
+}
+
+.menuicon a {
+  color: #333;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.icons{
+   filter: Gray();
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+   filter:invert(100%) grayscale(100%);
+
+}
+
+.icons:hover{
+  transition: all 250ms ease-out;
+  webkit-filter: grayscale(20%);
+  filter:  grayscale(20%);
+}
+
+.menuicon a:hover {
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
+.svg:hover {
+    fill: yellow;
+    width: 80%;
+    clear: both;
+    text-align: center;
+    transition: all 250ms ease-out;
+    margin-top: 0px;
+}
+.menuicon:hover{
+  border:2px dotted goldenrod;
+  border-radius: 5px;
+  margin-top: -2px;
+}
+.str0:hover{
+  stroke:blue;
+  stroke-width:15
+}
