@@ -55,7 +55,9 @@ function cek_kode_member_display(e)
           data: key,
         })
         .done(function(result) {
-            console.log(result);
+            var customer = JSON.parse(result);
+             $("input[id=nama_depan]").val(customer.nama_depan+" "+customer.nama_belakang).attr('readonly','true');
+             $("#no_handphone").val(customer.no_handphone).attr('readonly','true');
         });
 
 
