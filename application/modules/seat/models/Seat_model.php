@@ -41,6 +41,26 @@ class Seat_model extends CI_Model
         //return fetched data
         return ($query->num_rows() > 0) ? $query->result() : FALSE;
     } 
+
+
+
+    public function get_id($sid)
+    {
+                $this->db->where('id_jml_kursi',$sid);
+        return  $this->db->get($this->table)->first_row();
+    }
+
+    public function cek_block($sid,$nomor_layout)
+    {
+        $this->db->where('id_jml_kursi',$sid);
+        $this->db->where('nomor_layout',$nomor_layout);
+        return $this->db->get_where('p_mobil_kursi_layout')->first_row();
+    }
+
+    public function insert_block($data)
+    {
+        return $this->db->insert('p_mobil_kursi_layout',$data);
+    }
 }
 
 

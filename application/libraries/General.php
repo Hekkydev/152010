@@ -31,6 +31,16 @@ class General
         }
     }
 
+    public function cek_block($sid,$nomor_layout)
+    {
+        if(isset($nomor_layout)){
+            $this->CI->load->model('../modules/seat/models/seat_model');
+            $query = $this->CI->seat_model->cek_block($sid,$nomor_layout);
+            return $query;
+        }
+
+    }
+
 
 }
 

@@ -85,5 +85,60 @@ class Seat extends MY_Controller{
         $this->page_load('seat/list', $data, false);
     }
 
+    public function layout()
+    {
+        $sid = $this->input->get('sid');
+        if($sid == TRUE)
+        {
+            $data['seat'] = $this->seat_model->get_id($sid);
+            $this->title_page("Layout");
+            $this->page_sub_center_large("seat/options/layout.php",$data);
+        }else{
+            
+            redirect($this->seat,'refresh');
+            
+        }
+    }
+
+    public function load_setting_layout()
+    {   
+        $post = (object) $_POST;
+        $data['setting'] = $post;
+        $this->load->view('seat/options/setting_layout_input',$data);
+    }
+    public function update_setting_layout()
+    {
+        $post = (object) $_POST;
+        $data['setting'] = $post;
+        $data['layout'] = $this->seat_model->cek_block($post->id_jml_kursi,$post->nomor_layout);
+        $this->load->view('seat/options/setting_layout_update',$data);
+    }
+
+    public function konfigurasi_block()
+    {
+        $post = (object) $_POST;
+        $data = array(
+            'id_jml_kursi'=>$post->sid,
+            'nomor_layout'=>$post->nomor_layout,
+            'nomor_kursi'=>$post->nomor_kursi,
+            'id_status'=>$post->id_status,
+        );
+
+        $cek_layout = $this->seat_model->cek_block($post->sid,$post->nomor_layout);
+        if($cek_layout == TRUE){
+            echo "update";
+        }else{
+            $insert = $this->seat_model->insert_block($data);
+            if($insert == TRUE)
+            {
+                
+                redirect('seat/layout?sid='.$post->sid.'','refresh');
+                
+            }
+        }
+
+   
+    }
+
 
 }
