@@ -443,13 +443,15 @@ function cek_customers(nomor,nama)
               data:{nomor:nomor},
               success:function(result)
               {
-                if(result == true)
+                var object = $.parseJSON(result);
+                if(object != null)
                 {
                   var object = $.parseJSON(result);
                   nama.val(object.nama_customers);    
                 }else{
                   nama.val("");
                 }
+
               }
             });
 }
