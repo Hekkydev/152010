@@ -53,6 +53,8 @@ class Jadwal extends MY_Controller
 
   public function ajaxPaginationData()
   {
+
+   
 	  $conditions = array();
 
         //calc offset number
