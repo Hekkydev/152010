@@ -34,7 +34,7 @@
 
               echo anchor('member/edit?sid='.$m->uuid_member, 'Edit',$atribut_1);
               echo "&nbsp;";
-              echo anchor('member/delete?sid='.$m->uuid_member, 'Hapus', $atribut_2);
+              echo anchor('member/deleted?sid='.$m->uuid_member, 'Hapus', $atribut_2);
               echo "&nbsp;";
               echo anchor('member/track?sid='.$m->uuid_member, 'Track Record', $atribut_3);
               

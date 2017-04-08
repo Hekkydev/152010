@@ -78,5 +78,10 @@ class Member_model extends CI_Model{
     $this->db->where('uuid_member',$sid);
     return $this->db->update('p_member',$data);
   }
+  function deleted_member($data,$sid)
+  {
+    $this->db->where('uuid_member',$sid);
+    return $this->db->update('p_member',$data);
+  }
 
 }

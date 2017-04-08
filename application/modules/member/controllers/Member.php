@@ -202,4 +202,26 @@ class Member extends MY_Controller{
        }
     }
 
+    public function deleted()
+    {
+        $sid = $this->input->get('sid');
+        if ($sid == TRUE) {
+            $data = array('deleted_date'=>$this->waktu_skr());
+            $hapus = $this->member_model->deleted_member($data,$sid);
+            if($hapus == TRUE)
+            {
+                $this->AlertRequest("Member",'delete');
+                redirect($this->member,'refresh');
+                
+            }
+        }else{
+            
+            redirect($this->member,'refresh');
+            
+        }
+    }
+
+
+
+    
 }
