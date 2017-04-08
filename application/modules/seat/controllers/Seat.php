@@ -116,29 +116,51 @@ class Seat extends MY_Controller{
 
     public function konfigurasi_block()
     {
-        $post = (object) $_POST;
-        $data = array(
-            'id_jml_kursi'=>$post->sid,
-            'nomor_layout'=>$post->nomor_layout,
-            'nomor_kursi'=>$post->nomor_kursi,
-            'id_status'=>$post->id_status,
-        );
+        if($this->input->post('submit') == "insert")
+        {
+            $post = (object) $_POST;
+            $data = array(
+                'id_jml_kursi'=>$post->sid,
+                'nomor_layout'=>$post->nomor_layout,
+                'nomor_kursi'=>$post->nomor_kursi,
+                'id_status'=>$post->id_status,
+            );
 
-        $cek_layout = $this->seat_model->cek_block($post->sid,$post->nomor_layout);
-        if($cek_layout == TRUE){
-            echo "update";
-        }else{
-            $insert = $this->seat_model->insert_block($data);
-            if($insert == TRUE)
-            {
-                
-                redirect('seat/layout?sid='.$post->sid.'','refresh');
-                
+            $cek_layout = $this->seat_model->cek_block($post->sid,$post->nomor_layout);
+            if($cek_layout == TRUE){
+                echo "update";
+            }else{
+                $insert = $this->seat_model->insert_block($data);
+                if($insert == TRUE)
+                {        
+                    redirect('seat/layout?sid='.$post->sid.'','refresh');           
+                }
+            }
+        }else if($this->input->post('submit') == "update"){
+            $post = (object) $_POST;
+            $data = array(
+                'id_jml_kursi'=>$post->sid,
+                'nomor_layout'=>$post->nomor_layout,
+                'nomor_kursi'=>$post->nomor_kursi,
+                'id_status'=>$post->id_status,
+            );
+
+            $cek_layout = $this->seat_model->cek_block($post->sid,$post->nomor_layout);
+            if($cek_layout == TRUE){
+                echo "update";
+            }else{
+                $insert = $this->seat_model->insert_block($data);
+                if($insert == TRUE)
+                {        
+                    redirect('seat/layout?sid='.$post->sid.'','refresh');           
+                }
             }
         }
 
    
     }
+
+    
 
 
 }

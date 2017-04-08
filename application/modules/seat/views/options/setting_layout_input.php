@@ -27,7 +27,7 @@
     </div>
     <hr>
     <div class="form-group">
-        <button type="submit" class="btn btn-xs bg-purple">SIMPAN</button>
-        <button type="button" class="btn btn-xs bg-red">BATAL</button>
+        <button type="submit" class="btn btn-xs bg-purple" name="submit" value="insert">SIMPAN</button>
+        <button type="button" class="btn btn-xs bg-red"  name="submit" value="close">BATAL</button>
     </div>
 </form>

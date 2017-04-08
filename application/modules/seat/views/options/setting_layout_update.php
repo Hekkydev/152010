@@ -27,8 +27,7 @@
     </div>
     <hr>
     <div class="form-group">
-        <button type="submit" class="btn btn-xs bg-purple">SIMPAN</button>
-        <button type="button" class="btn btn-xs bg-red">BATAL</button>
-        <button type="submit" class="btn btn-xs bg-red">KOSONGKAN</button>
+        <button type="submit" class="btn btn-xs bg-purple" name="submit" value="update">UPDATE</button>
+        <button type="submit" class="btn btn-xs bg-red" name="submit" value="remove">REMOVE</button>
     </div>
 </form>
