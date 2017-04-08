@@ -54,7 +54,7 @@
 	$route['operasional/pembatalan/tiket']							= "pembatalan_tiket";
 	$route['operasional/manifest'] 									= "manifest";
 	$route['operasional/promo']  									= "promo";
-
+	
 	// barbershop
 	$route['barbershop'] 											=  'menu/home_barbershop';
 	$route['barbershop/pegawai'] 									=  'barbershop_pegawai';
@@ -64,7 +64,8 @@
 	$route['cargo'] 												=  'cargo/home_cargo';
 
 	// sales
-	$route['sales'] 												= 'sales/home_sales';
+	$route['sales'] 												= "menu/home_sales";
+
 
 	// keuangan
 	$route['keuangan'] 												= 'keuangan/home_keuangan';
