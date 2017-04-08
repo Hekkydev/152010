@@ -73,4 +73,10 @@ class Member_model extends CI_Model{
     return $Query = $this->db->get_where('p_member',$where = array('uuid_member'=>$sid));
   }
 
+  function update($data,$sid)
+  {
+    $this->db->where('uuid_member',$sid);
+    return $this->db->update('p_member',$data);
+  }
+
 }

@@ -167,5 +167,39 @@ class Member extends MY_Controller{
     public function update()
     {
 
+        $post = (object) $_POST;
+        $data = array(
+                'id_status'=>1,
+                'id_cabang'=> $this->security->sanitize_filename($post->cabang_daftar),
+                'id_jenis_kelamin'=> $this->security->sanitize_filename($post->jenis_kelamin),
+                'id_member_golongan'=> $this->security->sanitize_filename($post->jenis_member),
+                'kode_member'=> $this->security->sanitize_filename($post->kode_member),
+                'nama_depan'=> $this->security->sanitize_filename($post->nama_depan),
+                'nama_belakang'=> $this->security->sanitize_filename($post->nama_belakang),
+                'alamat'=> $this->security->sanitize_filename($post->alamat),
+                'tempat_lahir'=> $this->security->sanitize_filename($post->tempat_lahir),
+                'tanggal_lahir'=> $this->security->sanitize_filename($post->tanggal_lahir),
+                'no_ktp'=> $this->security->sanitize_filename($post->no_ktp),
+                'no_handphone'=> $this->security->sanitize_filename($post->no_telp),
+                'no_referensi'=> $this->security->sanitize_filename($post->no_telp_referensi),
+                'email_member'=> $this->security->sanitize_filename($post->email),
+                'tanggal_terdaftar'=>  $this->security->sanitize_filename($post->tgl_daftar),
+                'password'=> $this->security->sanitize_filename($post->password),
+                'last_change_date'=>$this->waktu_skr(),
+            );
+          
+
+       $update = $this->member_model->update($this->security->xss_clean($data),$post->sid);
+       if($update == TRUE)
+       {
+           $this->AlertRequest("Member","add");
+           redirect($this->member,'refresh');
+           
+       }else {
+           
+           redirect($this->member,'refresh');
+        
+       }
     }
+
 }
