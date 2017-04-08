@@ -4,7 +4,7 @@
 
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('sales/data_cso')?>">
+        <a href="<?php echo site_url('sales_customer_service')?>">
           <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
           <svg class="flat" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
@@ -66,7 +66,7 @@
     </div>
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('sales/data_cabang')?>">
+        <a href="<?php echo site_url('sales_cabang')?>">
           <svg class="flat" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         	 viewBox="0 0 61.168 61.168" style="enable-background:new 0 0 61.168 61.168;" xml:space="preserve">
         <g>
@@ -86,7 +86,7 @@
     </div>
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('sales/data_jurusan')?>">
+        <a href="<?php echo site_url('sales_jurusan')?>">
           <svg class="flat"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         	 viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
            <g>
@@ -158,7 +158,7 @@
     </div>
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('sales/data_jam')?>">
+        <a href="<?php echo site_url('sales_pershif')?>">
           <svg class="flat"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
            <g>
@@ -188,7 +188,7 @@
     </div>
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('operasional/reservasi')?>">
+        <a href="<?php echo site_url('sales_kendaraan')?>">
           <svg class="flat"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
            <g>
@@ -282,7 +282,7 @@
 
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('operasional/reservasi')?>">
+        <a href="<?php echo site_url('sales_sopir')?>">
           <?xml version="1.0" encoding="iso-8859-1"?>
             <!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
             <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -319,7 +319,7 @@
 
     <div class="col-lg-2">
       <div class="menuicon">
-        <a href="<?php echo site_url('operasional/reservasi')?>">
+        <a href="<?php echo site_url('sales_voucher_promo')?>">
           <?xml version="1.0" encoding="iso-8859-1"?>
             <!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
             <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
