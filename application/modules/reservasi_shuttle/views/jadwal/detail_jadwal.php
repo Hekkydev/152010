@@ -56,16 +56,23 @@
 <!-- OPERASIONAL SEAT LAYOUT -->
 
 <?php
+//NEW VERSION SEATING
   $tipe_kursi = $jadwal_keberangkatan->jumlah_kursi;
-  if($tipe_kursi == 8):
-        $this->load->view('layout_seat/8_seat');
-  elseif($tipe_kursi == 10):
-        $this->load->view('layout_seat/10_seat');
-  elseif($tipe_kursi == 12):
-        $this->load->view('layout_seat/12_seat');
-  elseif($tipe_kursi == 14):
-        $this->load->view('layout_seat/14_seat');
-  endif;
+  $this->load->view('reservasi_shuttle/layout_kursi/layout-mode');
+  ?>
+
+<?php  
+// OLD VERSION SEATING
+  //$tipe_kursi = $jadwal_keberangkatan->jumlah_kursi;
+  // if($tipe_kursi == 8):
+  //       $this->load->view('layout_seat/8_seat');
+  // elseif($tipe_kursi == 10):
+  //       $this->load->view('layout_seat/10_seat');
+  // elseif($tipe_kursi == 12):
+  //       $this->load->view('layout_seat/12_seat');
+  // elseif($tipe_kursi == 14):
+  //       $this->load->view('layout_seat/14_seat');
+  // endif;
 ?>
 
 <?php $this->load->view('reservasi_shuttle/inc_script/script_layout_seat.php'); ?>

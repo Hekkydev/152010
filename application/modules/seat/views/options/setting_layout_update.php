@@ -23,6 +23,10 @@
             <li>Tetapkan Nomor 0 Untuk Sopir dan hanya boleh memilih satu</li>
             <br>
             <li>Nonaktifkan Kondisi Untuk Mengosongkan Block</li>
+            <br>
+            <li>Warna Ungu Kondisi Block Active</li>
+            <br>
+            <li>Warna Orange Kondisi Block Active Khusus untuk Sopir</li>
         </ul>
     </div>
     <hr>

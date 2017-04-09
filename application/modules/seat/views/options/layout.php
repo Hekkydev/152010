@@ -16,11 +16,11 @@ for ($i=1; $i <= $total_kursi; $i++) {
 $cek_block = $this->general->cek_block($seat->id_jml_kursi,$i);
 if($cek_block == TRUE):?>
     <?php if($cek_block->nomor_kursi == 0):?>
-     <div class="col-lg-3" data-event="kursi" data-id="2" data-number="<?php echo $i;?>" align="center" style="background:#91cc52; color:#FFF; margin:5px;height:100px;padding-top:40px;cursor:pointer;">
+     <div class="col-lg-3" data-event="kursi" data-id="2" data-number="<?php echo $i;?>" align="center" style="background:#FF9900; color:#FFF; margin:5px;height:100px;padding-top:40px;cursor:pointer;">
     Active : <?php print_r($cek_block->nomor_kursi);?>
     </div>
     <?php else:?>
-    <div class="col-lg-3" data-event="kursi" data-layout="active" data-id="2" data-number="<?php echo $i;?>" align="center" style="background:#ff9703; color:#FFF; margin:5px;height:100px;padding-top:40px;cursor:pointer;">
+    <div class="col-lg-3" data-event="kursi" data-layout="active" data-id="2" data-number="<?php echo $i;?>" align="center" style="background:#754dbf; color:#FFF; margin:5px;height:100px;padding-top:40px;cursor:pointer;">
     Active : <?php print_r($cek_block->nomor_kursi);?>
     </div>
     <?php endif;?>
