@@ -164,7 +164,7 @@ class Cek_kursi
     {
 
            
-           $html = '';
+           $html  = '';
            $html .= '<div class="penumpang '.$this->informasi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">';
            $html .= '<div class="col-lg-3 passengger'.$nomor_kursi.'" align="center" style="padding:10px  0 20px 0; margin:3px;">';
            $html .= '<div class="icon-bangku '.$this->status_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'" '.$this->data_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).' ><span class="infoSeat '.$this->kursi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">'.$nomor_kursi.'</span></div>';
