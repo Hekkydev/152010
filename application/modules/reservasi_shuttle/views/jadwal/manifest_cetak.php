@@ -65,6 +65,15 @@
               </select>
             </div>
           </div>
+
+          <table>
+            <thead>
+              <tr>
+                  <td></td>
+              </tr>
+            </thead>
+          </table>
+
           <div class="form-group">
             <div class="col-xs-offset-9 col-lg-3">
               <button type="button" onclick="setup_mobil_insert('')" name="button" class="btn btn-block  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN</button>
