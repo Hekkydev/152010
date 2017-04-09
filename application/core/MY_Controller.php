@@ -27,10 +27,6 @@ class MY_Controller extends CI_Controller{
                             '../modules/discount/models/discount_model',
                             '../modules/member/models/member_model',
                             '../modules/customer/models/customer_model',
-
-
-
-
                           );
 
   public $helper = array(
@@ -50,13 +46,15 @@ class MY_Controller extends CI_Controller{
                             'manifest_helper',
                         );
 
-  public $library = array(  'session',
+  public $library = array(  
+                            'session',
                             'encrypt',
                             'form_validation',
                             'ajax_pagination',
                             'pagination',
 							              'security',
-                            'general'
+                            'general',
+                            'cek_kursi',
 
                         );
 
