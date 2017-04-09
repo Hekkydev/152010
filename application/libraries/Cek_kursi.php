@@ -16,7 +16,7 @@ class Cek_kursi
     public function cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
         $this->CI->load->model($this->model);
-        $Query = $this->CI->reservasi_model->reservasi_cek($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
+        $Query = $this->CI->reservasi_model->reservasi_cek($kode_jadwal,$tanggal_reservasi,$nomor_kursi)->first_row();
         return $Query;
     }
 
@@ -27,7 +27,7 @@ class Cek_kursi
             if($cek == FALSE) throw new Exception("BELUM TERISI");
             return strtoupper($cek->nama_penumpang); // kondisi penumpang terisi
         } catch (Exception $e) {
-            print_r($e->getMessage()); // kondisi penumpang kosong
+            return $e->getMessage(); // kondisi penumpang kosong
         }
     }
 
@@ -35,97 +35,145 @@ class Cek_kursi
     {
         $cek = $this->cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
 
-        try {
-        if($cek == FALSE) throw new Exception("icon-bangku-kosong");
-            if($cek->id_reservasi_shuttle_tipe == 1):
-                    echo "icon-bangku-booking"; // kondisi penumpang booking belum membayar
-            elseif($cek->id_reservasi_shuttle_tipe == 2):
-                    echo "icon-bangku-dibayar"; // kondisi penumpang sudah bayar
-            else:
-                    echo "icon-bangku-kosong"; // konidisi penumpang kosong
-            endif;
-        } catch (Exception $e) {
-                    print_r($e->getMessage());
+        if($cek == TRUE){
+            $reservasi_tipe = $cek->id_reservasi_shuttle_tipe;
+            switch ($reservasi_tipe) {
+                case $reservasi_tipe == 1:// kondisi penumpang booking belum membayar
+                    return "icon-bangku-booking";
+                    break;
+
+                case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
+                    return "icon-bangku-dibayar";
+                    break;
+                
+                default:// kondisi penumpang kosong
+                    return "icon-bangku-kosong";
+                    break;
+            }
+        }else{
+                    return "icon-bangku-kosong"; // kondisi penumpang kosong
         }
+       
     }
 
 
     public function button_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
-        $cek = reservasi_shuttle($kode_j,$tgl_req,$nomor_kursi,$where)->first_row();
-        try {
-        if($cek == FALSE) throw new Exception("bg-default btn-outline"); 
-            if($cek->id_reservasi_shuttle_tipe == 1):
-                    echo "bg-blue"; // penumpang kondisi penumpang booking dan belum bayar
-            elseif($cek->id_reservasi_shuttle_tipe == 2):
-                    echo "bg-red"; // penumpang kondisi penumpang booking sudah dibayar
-            else:
-                    echo "bg-default btn-outline";  //penumpang kondisi penumpang kosong
-            endif;
-        } catch (Exception $e) {
-            print_r($e->getMessage());
+        $cek = $this->cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
+
+        if($cek == TRUE){
+            $reservasi_tipe = $cek->id_reservasi_shuttle_tipe;
+            switch ($reservasi_tipe) {
+                case $reservasi_tipe == 1:// kondisi penumpang booking belum membayar
+                    return "bg-blue";
+                    break;
+
+                case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
+                    return "bg-red";
+                    break;
+                
+                default:// kondisi penumpang kosong
+                    return "bg-default btn-outline";
+                    break;
+            }
+        }else{
+                    return "bg-default btn-outline"; // kondisi penumpang kosong
         }
+        
     }
 
 
 
     public function kursi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
-        $cek = reservasi_shuttle($kode_j,$tgl_req,$nomor_kursi,$where)->first_row();
-            try {
-            if($cek == FALSE) throw new Exception("bg-default");
-                if($cek->id_reservasi_shuttle_tipe == 1):
-                        echo "bg-blue"; // kondisi penunmpang booking belum bayar
-                elseif($cek->id_reservasi_shuttle_tipe == 2):
-                        echo "bg-red"; // kondisi penumpang booking / go show sudah membayar
-                else:
-                        echo "bg-default"; // kondisi penumpang kosong
-                endif;
-            } catch (Exception $e) {
-                 print_r($e->getMessage()); // kondisi penumpang kosong
-            }
+        $cek = $this->cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
+        if($cek == TRUE){
+                    $reservasi_tipe = $cek->id_reservasi_shuttle_tipe;
+                    switch ($reservasi_tipe) {
+                        case $reservasi_tipe == 1:// kondisi penumpang booking belum membayar
+                            return "bg-blue";
+                            break;
+
+                        case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
+                            return "bg-red";
+                            break;
+                        
+                        default:// kondisi penumpang kosong
+                            return "bg-default";
+                            break;
+                    }
+                }else{
+                            return "bg-default"; // kondisi penumpang kosong
+                }
     }
 
 
     public function data_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
-            $cek = reservasi_shuttle($kode_j,$tgl_req,$nomor_kursi,$where)->first_row();
-            try {
-            if($cek == FALSE) throw new Exception(" data-id='0' "); // kondisi penumpnag konsong jika tidak ada data pada table rerservasi
-                if($cek->id_reservasi_shuttle_tipe == 1): // kondisi penumpang hanya booking
-                    echo " data-id='1' data-penumpang='".$cek->kode_tiket."' data-booking='".$cek->kode_booking."' ";
-                elseif($cek->id_reservasi_shuttle_tipe == 2): // kondisi penumpang sudah membayar
-                    echo " data-id='2' data-penumpang='".$cek->kode_tiket."' data-booking='".$cek->kode_booking."' ";
-                else:
-                    echo " data-id='0' ";  // kondisi penumpang kosong
-                endif;
-            } catch (Exception $e) {
-                    print_r($e->getMessage()); // kondisi penumpnag konsong
+            $cek = $this->cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
+
+
+            if($cek == TRUE){
+                $reservasi_tipe = $cek->id_reservasi_shuttle_tipe;
+                switch ($reservasi_tipe) {
+                    case $reservasi_tipe == 1:// kondisi penumpang booking belum membayar
+                        return "data-id='1' data-penumpang='".$cek->kode_tiket."' data-booking='".$cek->kode_booking."'";
+                        break;
+
+                    case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
+                        return "data-id='2' data-penumpang='".$cek->kode_tiket."' data-booking='".$cek->kode_booking."'";
+                        break;
+                    
+                    default:// kondisi penumpang kosong
+                        return "data-id='0'";
+                        break;
+                }
+            }else{
+                        return "data-id='0'"; // kondisi penumpang kosong
             }
     }
 
     public function informasi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
-        $cek = reservasi_shuttle($kode_j,$tgl_req,$nomor_kursi,$where)->first_row();
-
-        try {
-        if($cek == FALSE) throw new Exception(" penumpang-kosong ");
-            if($cek->id_reservasi_shuttle_tipe == 1):
-                    echo " penumpang-booking ";
-            elseif($cek->id_reservasi_shuttle_tipe == 2):
-                    echo " penumpang-dibayar  ";
-            else:
-                    echo " penumpang-kosong ";
-            endif;
-        } catch (Exception $e) {
-                    print_r($e->getMessage());
-        } 
+        
+        $cek = $this->cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
 
 
+            if($cek == TRUE){
+                $reservasi_tipe = $cek->id_reservasi_shuttle_tipe;
+                switch ($reservasi_tipe) {
+                    case $reservasi_tipe == 1:// kondisi penumpang booking belum membayar
+                        return "penumpang-booking";
+                        break;
+
+                    case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
+                        return "penumpang-dibayar";
+                        break;
+                    
+                    default:// kondisi penumpang kosong
+                        return "penumpang-kosong'";
+                        break;
+                }
+            }else{
+                        return "penumpang-kosong"; // kondisi penumpang kosong
+            }
     }
 
 
-    
+    public function find($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
+    {
+
+           
+           $html = '';
+           $html .= '<div class="penumpang '.$this->informasi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">';
+           $html .= '<div class="col-lg-3 passengger'.$nomor_kursi.'" align="center" style="padding:10px  0 20px 0; margin:3px;">';
+           $html .= '<div class="icon-bangku '.$this->status_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'" '.$this->data_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).' ><span class="infoSeat '.$this->kursi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">'.$nomor_kursi.'</span></div>';
+           $html .= '<button class="btn-bangku btn btn-xs '.$this->button_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">'.$this->nama_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'</button>';
+           $html .= '</div></div>'; 
+
+           return $html;  
+    }
+
 
 
 
