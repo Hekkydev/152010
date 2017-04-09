@@ -115,5 +115,16 @@ class Reservasi_model extends CI_Model{
 
   }
 
+  public function reservasi_cek($kode,$tgl,$nomor_kursi)
+  {
+    $this->db->select('*');
+    $this->db->from('p_reservasi_shuttle_fix');
+    $this->db->where('kode_jadwal',$kode);
+    $this->db->where('tanggal_reservasi',$tgl);
+    $this->db->where('nomor_kursi',$nomor_kursi);
+    $this->db->where('deleted_date',NULL);
+    return $this->db->get();
+  }
+
 
 }

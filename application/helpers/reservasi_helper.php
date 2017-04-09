@@ -22,7 +22,7 @@ if(!function_exists('cek_penumpang_nama')):
     $cek = reservasi_shuttle($kode_j,$tgl_req,$nomor_kursi,$where)->first_row();
     try {
       if($cek == FALSE) throw new Exception("BELUM TERISI");
-      return $cek->nama_penumpang;
+      return strtoupper($cek->nama_penumpang);
     } catch (Exception $e) {
       print_r($e->getMessage());
     }
