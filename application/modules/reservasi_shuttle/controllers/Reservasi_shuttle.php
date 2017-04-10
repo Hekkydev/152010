@@ -405,5 +405,13 @@ function pembatalan_tiket()
             $this->load->view('reservasi_shuttle/checkout/modal-metode-pembayaran');
   }
 
+  function manifest_trip()
+  {
+            $this->load->library(array('manifest'));
+            $post = (object) $_POST;            
+            $data['manifest'] = $this->manifest->biaya_trip_jurusan($post->asal,$post->tujuan);
+            $this->page_load('reservasi_shuttle/jadwal/manifest_trip',$data);
+  }
+
 
 }

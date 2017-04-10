@@ -66,13 +66,9 @@
             </div>
           </div>
 
-          <table>
-            <thead>
-              <tr>
-                  <td></td>
-              </tr>
-            </thead>
-          </table>
+          <div id="trip-data"></div>
+
+      
 
           <div class="form-group">
             <div class="col-xs-offset-9 col-lg-3">

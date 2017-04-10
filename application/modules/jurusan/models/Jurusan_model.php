@@ -245,6 +245,11 @@ class Jurusan_model extends CI_Model{
         return $this->db->update('p_master_jurusan',$data);
 
     }
+   
+	public function master_biaya_trip_jurusan($asal,$tujuan)
+    {
+           return 0;
+    }
 
 
 

@@ -216,9 +216,25 @@ function info_detail()
 
 function cetak_manifest()
 {
-
-                  $(".manifest").show();
-                  $("#slide-bottom-popup").modal("show");
+                  var asal_keberangkatan    = $('select[id=asal_keberangkatan]').val();
+                  var tujuan_keberangkatan  = $('select[id=tujuan_keberangkatan]').val();
+                  send = {
+                        asal:asal_keberangkatan,
+                        tujuan:tujuan_keberangkatan,     
+                  };
+                  //$(".manifest").show();
+                  //$("#slide-bottom-popup").modal("show");
+                  //$('#trip-data').html(result);
+                  $.ajax({
+                        url:url_control+'/reservasi_shuttle/manifest_trip',
+                        type:'POST',
+                        cache:false,
+                        data:send,
+                        success:function(result)
+                        {
+                              console.log(result);
+                        }
+                  });
 }
 
 
