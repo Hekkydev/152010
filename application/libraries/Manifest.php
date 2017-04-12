@@ -12,6 +12,7 @@ class Manifest
             $this->CI =& get_instance();
             $this->model_jurusan    = APPPATH.'modules/jurusan/models/jurusan_model'; 
             $this->model_reservasi  = APPPATH.'modules/reservasi_shuttle/models/reservasi_model'; 
+            $this->model_manifest   = APPPATH.'modules/manifest/models/manifest_model'; 
     }
 
     public function validasi_kode($post)
@@ -36,6 +37,13 @@ class Manifest
         $this->CI->load->model($this->model_reservasi);
         $Q = $this->CI->reservasi_model->total_penumpang_trip($kode_manifest);
         return count($Q->result_object());
+    }
+
+    public function save_manifest_data($data)
+    {
+        $this->CI->load->model($this->model_manifest);
+        $Q = $this->CI->manifest_model->insert($data);
+        return $Q;
     }
 
    
