@@ -4,6 +4,11 @@
  */
 class Manifest_model extends CI_Model
 {
+  public function __construct()
+  {
+    parent::__construct();
+    $this->table = "p_manifest_data";
+  }
     
   public function find_manifest($data){
     $tanggal_awal_cek = new DateTime($data['tanggal_awal']);  
@@ -34,6 +39,11 @@ class Manifest_model extends CI_Model
     $this->db->order_by('b.jam','ASC');
     $query = $this->db->get();
     return $query->result_object();
+  }
+
+  public function insert($data)
+  {
+      return $this->db->insert($this->table,$data);
   }
 
 }
