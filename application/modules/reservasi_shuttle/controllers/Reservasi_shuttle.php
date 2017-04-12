@@ -18,11 +18,10 @@ class Reservasi_shuttle extends MY_Controller{
   function index()
   {
 
-            $data['diskon']       =   $this->Shuttle_Diskon();
-
-            $data['mobil']        =   $this->AllMobil->result_object();
-            $data['sopir']        =   $this->AllSopir->result_object();
-            $data['kota']         =   $this->AllKota->result_object();
+            $data['diskon']               =   $this->Shuttle_Diskon();
+            $data['mobil']                =   $this->AllMobil->result_object();
+            $data['sopir']                =   $this->AllSopir->result_object();
+            $data['kota']                 =   $this->AllKota->result_object();
 
             //$this->print_data($data);
 
