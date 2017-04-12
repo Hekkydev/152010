@@ -1,14 +1,11 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Manifest model by Hekky Nurhikmat
  */
 class Manifest_model extends CI_Model
 {
-  public function __construct()
-  {
-    parent::__construct();
-    $this->table = "p_manifest_data";
-  }
+  
     
   public function find_manifest($data){
     $tanggal_awal_cek = new DateTime($data['tanggal_awal']);  
@@ -43,7 +40,7 @@ class Manifest_model extends CI_Model
 
   public function insert($data)
   {
-      return $this->db->insert($this->table,$data);
+      return $this->db->insert('p_manifest_data',$data);
   }
 
 }

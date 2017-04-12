@@ -49,7 +49,7 @@
               <select class="form-control input-sm" name="unit_mobil">
                 <option value="" selected="" disabled>Pilih Unit</option>
                 <?php foreach ($mobil as $m): ?>
-                  <option value=""><?php echo $m->kode_unit." - ".$m->no_stnk ?></option>
+                  <option value="<?php echo $m->uuid_mobil_unit;?>"><?php echo $m->kode_unit." - ".$m->no_stnk ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -60,7 +60,7 @@
               <select class="form-control input-sm" name="data_sopir">
               <option value="" selected="" disabled>Pilih Sopir</option>
                 <?php foreach ($sopir as $s): ?>
-                  <option value=""><?php echo $s->kode_sopir." - ".$s->nama_lengkap ?></option>
+                  <option value="<?php echo $s->uuid_sopir; ?>"><?php echo $s->kode_sopir." - ".$s->nama_lengkap ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -72,8 +72,8 @@
 
           <div class="form-group">
             <div class="col-xs-offset-6 col-lg-6">
-              <button type="button" onclick="setup_mobil_insert('')" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN</button>
-              <button type="button" onclick="setup_mobil_insert('')" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN & CETAK</button>
+              <button type="button" onclick="save_manifest_data();" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN</button>
+              <button type="button" onclick="save_manifest_data();" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN & CETAK</button>
             </div>
           </div>
         </form>
@@ -82,4 +82,4 @@
     </div>
   </div>
 </div><!-- /.modal -->
-<?php //include 'script/script_manifest.php';?>
+<?php $this->load->view('reservasi_shuttle/inc_script/script_manifest');?>

@@ -10,9 +10,9 @@ class Manifest
     public function __construct()
     {  
             $this->CI =& get_instance();
-            $this->model_jurusan    = APPPATH.'modules/jurusan/models/jurusan_model'; 
-            $this->model_reservasi  = APPPATH.'modules/reservasi_shuttle/models/reservasi_model'; 
-            $this->model_manifest   = APPPATH.'modules/manifest/models/manifest_model'; 
+            $this->model_jurusan    = '../modules/jurusan/models/jurusan_model'; 
+            $this->model_reservasi  = '../modules/reservasi_shuttle/models/reservasi_model'; 
+            $this->m_manifest       = '../modules/manifest/models/manifest_model';
     }
 
     public function validasi_kode($post)
@@ -41,7 +41,7 @@ class Manifest
 
     public function save_manifest_data($data)
     {
-        $this->CI->load->model($this->model_manifest);
+        $this->CI->load->model($this->m_manifest);
         $Q = $this->CI->manifest_model->insert($data);
         return $Q;
     }

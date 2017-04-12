@@ -414,6 +414,30 @@ function pembatalan_tiket()
             $this->page_load('reservasi_shuttle/jadwal/manifest_trip',$data);
   }
 
+  function save_manifest_data()
+  {
+            $this->load->library(array('manifest'));
+            $post = (object) $_POST;
+           
+            $data = array(
+              'kode_manifest'=>$post->kode_manifest,
+              'uuid_sopir'=>$post->uuid_sopir,
+              'uuid_mobil_unit'=>$post->uuid_mobil_unit,
+              'tanggal_cetak_manifest'=>$this->waktu_skr,
+              'kode_jadwal'=>$post->kode_jadwal,
+              'created_date'=>$this->waktu_skr,
+            );
+           
+            $save = $this->manifest->save_manifest_data($data);
+            if($save == TRUE)
+            {
+              echo "success";
+            }else{
+              echo "error";
+            }
+
+  }
+
 
 
 }
