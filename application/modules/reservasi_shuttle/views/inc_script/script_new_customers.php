@@ -32,6 +32,8 @@ function cek_kode_member(e)
               $("p[id=kode_member_message]").text("Terdaftar").attr('style', 'color:green');
           }else{
               $("p[id=kode_member_message]").text("Tidak Terdaftar").attr('style', 'color:#CC0000');
+              $("input[id=nama_depan]").val("").removeAttr('readonly','true');
+              $("#no_handphone").val("").removeAttr('readonly','true');
           }
         }
       })
@@ -55,9 +57,12 @@ function cek_kode_member_display(e)
           data: key,
         })
         .done(function(result) {
-            var customer = JSON.parse(result);
+          var customer = JSON.parse(result);
+          if(customer.nama_depan != 0 ){
              $("input[id=nama_depan]").val(customer.nama_depan).attr('readonly','true');
              $("#no_handphone").val(customer.no_handphone).attr('readonly','true');
+          }
+            
         });
 
 
