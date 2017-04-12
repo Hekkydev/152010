@@ -410,8 +410,10 @@ function pembatalan_tiket()
             $this->load->library(array('manifest'));
             $post = (object) $_POST;            
             $data['manifest'] = $this->manifest->biaya_trip_jurusan($post->asal,$post->tujuan);
+            $data['jumlah_penumpang'] = $this->manifest->cek_jumlah_penumpang_trip($post->kode_manifest);
             $this->page_load('reservasi_shuttle/jadwal/manifest_trip',$data);
   }
+
 
 
 }

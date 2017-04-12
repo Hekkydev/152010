@@ -117,14 +117,23 @@ class Reservasi_model extends CI_Model{
 
   public function reservasi_cek($kode,$tgl,$nomor_kursi)
   {
-    $this->db->select('*');
-    $this->db->from('p_reservasi_shuttle_fix');
-    $this->db->where('kode_jadwal',$kode);
-    $this->db->where('tanggal_reservasi',$tgl);
-    $this->db->where('nomor_kursi',$nomor_kursi);
-    $this->db->where('deleted_date',NULL);
-    return $this->db->get();
+          $this->db->select('*');
+          $this->db->from('p_reservasi_shuttle_fix');
+          $this->db->where('kode_jadwal',$kode);
+          $this->db->where('tanggal_reservasi',$tgl);
+          $this->db->where('nomor_kursi',$nomor_kursi);
+          $this->db->where('deleted_date',NULL);
+          return $this->db->get();
   }
 
+  public function total_penumpang_trip($kode_manifest)
+  {
+          $this->db->select('*');
+          $this->db->from('p_reservasi_shuttle_fix');
+          $this->db->where('kode_manifest',$kode_manifest);
+          $this->db->where('id_status_pemesanan_shuttle',2);
+          $this->db->where('deleted_date',NULL);
+          return $this->db->get();
+  }
 
 }

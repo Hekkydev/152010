@@ -218,13 +218,13 @@ function cetak_manifest()
 {
                   var asal_keberangkatan    = $('select[id=asal_keberangkatan]').val();
                   var tujuan_keberangkatan  = $('select[id=tujuan_keberangkatan]').val();
+                  var kode_manifest         = $('input[id=kode_manifest').val();
                   send = {
                         asal:asal_keberangkatan,
-                        tujuan:tujuan_keberangkatan,     
+                        tujuan:tujuan_keberangkatan,
+                        kode_manifest:kode_manifest     
                   };
-                  //$(".manifest").show();
-                  //$("#slide-bottom-popup").modal("show");
-                  //$('#trip-data').html(result);
+                 
                   $.ajax({
                         url:url_control+'/reservasi_shuttle/manifest_trip',
                         type:'POST',
@@ -232,7 +232,11 @@ function cetak_manifest()
                         data:send,
                         success:function(result)
                         {
-                              console.log(result);
+                              $(".manifest").show();
+                              $("#slide-bottom-popup").modal("show");
+                              $('#trip-data').html(result);
+                              $('select[name=unit_mobil]').val("");
+                              $('select[name=data_sopir]').val("");
                         }
                   });
 }

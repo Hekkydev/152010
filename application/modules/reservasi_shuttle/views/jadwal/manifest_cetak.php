@@ -39,7 +39,7 @@
       <div class="modal-body modal-manifest"  style="background-color:#FFF;">
       <div style="margin-bottom:20px;" >
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-close"></i></span><span class="sr-only">Close</span></button>
-        <h4>CETAK MANIFEST</h4>
+        <h4>MANIFEST TRIP</h4>
         <hr>
         <form class="form-horizontal"  method="post">
 
@@ -65,14 +65,15 @@
               </select>
             </div>
           </div>
-
+          <br>
           <div id="trip-data"></div>
 
       
 
           <div class="form-group">
-            <div class="col-xs-offset-9 col-lg-3">
-              <button type="button" onclick="setup_mobil_insert('')" name="button" class="btn btn-block  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN</button>
+            <div class="col-xs-offset-6 col-lg-6">
+              <button type="button" onclick="setup_mobil_insert('')" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN</button>
+              <button type="button" onclick="setup_mobil_insert('')" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN & CETAK</button>
             </div>
           </div>
         </form>
