@@ -59,7 +59,7 @@ class Seat_model extends CI_Model
 
     public function insert($data)
     {
-        return $this->db->isnert($this->table,$data);
+        return $this->db->insert($this->table,$data);
     }
 
     public function insert_block($data)
@@ -87,6 +87,12 @@ class Seat_model extends CI_Model
         );
 
         return (object) $mode;
+    }
+
+
+    public function update($data,$sid)
+    {
+        return $this->db->update('p_mobil_kursi',$data,$condition = array('id_jml_kursi'=>$sid));
     }
 }
 

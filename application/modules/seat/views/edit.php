@@ -3,8 +3,13 @@ $form = array(
     'onSubmit'=>'return validasi()',
     'method'=>'POST',
 );
-
-echo form_open('seat/insert');
+$id = array(
+    'name'=>'id_jml_kursi',
+    'type'=>'hidden',
+    'value'=>$seat->id_jml_kursi,
+);
+echo form_open('seat/update');
+echo form_input($id);
 ?>
 
 
@@ -20,7 +25,7 @@ echo form_open('seat/insert');
         <div class="form-group">
             <label class="control-label col-lg-4">Jumlah Seat :</label>
             <div class="col-lg-6">
-                <input type="text" name="jumlah_seat" value="<?php echo $seat->jumlah_kursi;?>" class="form-control">
+                <input type="text" name="jumlah_kursi" value="<?php echo $seat->jumlah_kursi;?>" class="form-control">
             </div>
         </div>
         <div class="form-group">

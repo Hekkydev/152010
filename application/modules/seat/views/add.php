@@ -20,7 +20,7 @@ echo form_open('seat/insert');
         <div class="form-group">
             <label class="control-label col-lg-4">Jumlah Seat :</label>
             <div class="col-lg-6">
-                <input type="text" name="jumlah_seat" value="" class="form-control">
+                <input type="text" name="jumlah_kursi" value="" class="form-control">
             </div>
         </div>
         <div class="form-group">
@@ -34,8 +34,9 @@ echo form_open('seat/insert');
             <label class="control-label col-lg-4">Type Layout :</label>
             <div class="col-lg-6">
                 <select class="form-control input-sm" name="tipe_layout">
-                    <option value="col-lg-3">KOLOM 3</option>
-                    <option value="col-lg-2">KOLOM 4</option>
+                    <?php foreach($mode_block as $key => $value):?>
+                        <option value="<?php echo $key?>"><?php echo $value;?></option>
+                    <?php endforeach;?>
                 </select>
             </div>
         </div>

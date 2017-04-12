@@ -105,7 +105,7 @@ class Seat extends MY_Controller{
     {
             $data['mode_block'] = $this->mode_block;
             $this->title_page("Tambah Data Seat");
-            $this->page_sub_center_large("seat/add");
+            $this->page_sub_center_large("seat/add",$data);
     }
 
     public function insert()
@@ -114,8 +114,8 @@ class Seat extends MY_Controller{
             $data = array(
                 'jumlah_kursi'=>$post->jumlah_kursi,
                 'jumlah_block'=>$post->jumlah_block,
-                'tipe_kelas'=>$post->tipe_kelas,
-                'tipe_layout'=>$post->tipe_layout,
+                'tipe_jenis_kursi'=>$post->tipe_kelas,
+                'mode_block'=>$post->tipe_layout,
             );
             $simpan = $this->seat_model->insert($data);
 
@@ -142,6 +142,26 @@ class Seat extends MY_Controller{
             redirect($this->seat,'refresh');
             
         }    
+    }
+
+        public function update()
+    {
+            $post = (object) $_POST;
+            $data = array(
+                'jumlah_kursi'=>$post->jumlah_kursi,
+                'jumlah_block'=>$post->jumlah_block,
+                'tipe_jenis_kursi'=>$post->tipe_kelas,
+                'mode_block'=>$post->tipe_layout,
+            );
+            $sid = $post->id_jml_kursi;
+            $update = $this->seat_model->update($data,$sid);
+
+            if($update == TRUE)
+            {
+                
+                redirect($this->seat,'refresh');
+                
+            }
     }
 
     public function load_setting_layout()
