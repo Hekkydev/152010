@@ -37,4 +37,12 @@ class Manifest extends MY_Controller
         $this->page_load('manifest/options/list',$this->data);
         
     }
+
+    public function operasional_manifest()
+    {
+         
+         $this->page_form('manifest/manifest_operasional/page');
+    }
+
+    
 }

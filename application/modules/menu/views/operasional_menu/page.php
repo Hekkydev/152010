@@ -54,7 +54,11 @@
     </td>
     <td align="center" width="30px">
       <div style="margin-right:10px">
-          <div class="border"><div class="icon-operasional icon-bo-tambahan" title="Posisi kursi ketika di klik"></div></div>
+           <?php if($this->uri->segment(2) == "manifest"):?>
+          <div class="border-active">
+          <?php else: ?>
+            <div class="border">
+          <?php endif;?><div class="icon-operasional icon-bo-tambahan" title="Manifest" onclick="go_manifest();"></div></div>
           <span class="title_icon">Manifest</span>
       </div>
 
@@ -162,5 +166,10 @@ function go_barbershop() {
 function go_operasional_keuangan()
 {
   var link = window.location = "<?php echo base_url()?>operasional_laporan_keuangan";
+}
+
+function go_manifest()
+{
+  var link = window.location = "<?php echo base_url()?>operasional_manifest";
 }
 </script>

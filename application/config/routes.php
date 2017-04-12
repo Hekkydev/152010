@@ -53,6 +53,7 @@
 	$route['operasional/pembatalan']								= "laporan_pembatalan";
 	$route['operasional/pembatalan/tiket']							= "pembatalan_tiket";
 	$route['operasional/manifest'] 									= "manifest";
+	$route['operasional_manifest'] 									= "manifest/operasional_manifest";
 	$route['operasional/promo']  									= "promo";
 	
 	// barbershop
