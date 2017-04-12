@@ -78,6 +78,16 @@ class Seat_model extends CI_Model
         $this->db->where('nomor_layout',$nomor_layout);
         return $this->db->delete('p_mobil_kursi_layout');
     }
+
+    public function mode_block()
+    {
+        $mode = array(
+            'col-lg-3'=>'3 Kolom',
+            'col-lg-2'=>'4 Kolom',
+        );
+
+        return (object) $mode;
+    }
 }
 
 

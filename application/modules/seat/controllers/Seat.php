@@ -9,6 +9,7 @@ class Seat extends MY_Controller{
     $this->Authentikasi         = $this->Authentikasi();
     $this->KursiMobil           = $this->KursiMobil();
     $this->load_model           = $this->load->model(array('seat_model'));
+    $this->mode_block           = $this->seat_model->mode_block();
     $this->seat                 = "seat";
     $this->perPage              = 5;
 
@@ -102,6 +103,7 @@ class Seat extends MY_Controller{
 
     public function add()
     {
+            $data['mode_block'] = $this->mode_block;
             $this->title_page("Tambah Data Seat");
             $this->page_sub_center_large("seat/add");
     }
@@ -123,6 +125,23 @@ class Seat extends MY_Controller{
                 redirect($this->seat,'refresh');
                 
             }
+    }
+
+    public function edit()
+    {
+        $sid = $this->input->get('sid');
+        $cek = $this->seat_model->get_id($sid);
+        if($cek == TRUE)
+        {
+            $data['seat'] = $this->seat_model->get_id($sid);
+            $data['mode_block'] = $this->mode_block;
+            $this->title_page('Edit Data Seat');
+            $this->page_sub_center_large('seat/edit',$data);
+        }else{
+            
+            redirect($this->seat,'refresh');
+            
+        }    
     }
 
     public function load_setting_layout()
