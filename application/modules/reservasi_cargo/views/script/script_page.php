@@ -120,6 +120,7 @@ function proses_pencarian_jadwal(tgl_berangkat,asal_keberangkatan,tujuan_keberan
                       var reset = close_input();
                       var panel_input = $("div#panel-input-paket").show();
                       var panel_detail = $("div#panel-detail-paket").hide();
+                      var kondisi_waktu  = $('#cek-waktu-jadwal').show();
               });
 }
 
@@ -150,6 +151,7 @@ function detail_jadwal(tgl_berangkat,asal,tujuan,waktu,kode_atr,kode_jadwal)
                     }).done(function(){
                         $(".loading").hide();
                         var reset = open_input();
+                        $('#cek-waktu-jadwal').hide();
                     });
 }
 

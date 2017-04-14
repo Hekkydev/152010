@@ -269,4 +269,11 @@ class Cargo_model extends CI_Model{
         return  $this->db->update('p_pengiriman_paket', $data, $where);
     }
 
+
+    public function total_paket_trip($kode_manifest)
+    {
+       $this->db->where('kode_manifest', $kode_manifest);
+       return $this->db->get('p_pengiriman_paket');
+    }
+
 }

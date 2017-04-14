@@ -129,6 +129,7 @@ class Jadwal_model extends CI_Model
 			$this->db->join('p_mobil_kursi','p_mobil_kursi.id_jml_kursi = p_jadwal.id_jml_kursi','left');
 			$this->db->where('asal_keberangkatan',$asal);
 			$this->db->where('tujuan_keberangkatan',$tujuan);
+			$this->db->order_by('p_jadwal.jam','ASC');
 
 			return $this->db->get()->result();
 		}

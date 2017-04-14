@@ -41,45 +41,11 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-close"></i></span><span class="sr-only">Close</span></button>
         <h4>MANIFEST TRIP</h4>
         <hr>
-        <form class="form-horizontal"  method="post">
+        <div id="trip-data">
 
-          <div class="form-group" style="text-align:left">
-            <label class="control-label col-xs-4" >UNIT MOBIL</label>
-            <div class="col-lg-8">
-              <select class="form-control input-sm" name="unit_mobil">
-                <option value="" selected="" disabled>Pilih Unit</option>
-                <?php foreach ($mobil as $m): ?>
-                  <option value="<?php echo $m->uuid_mobil_unit;?>"><?php echo $m->kode_unit." - ".$m->no_stnk ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group" style="text-align:left">
-            <label class="control-label col-xs-4" >SOPIR</label>
-            <div class="col-lg-8">
-              <select class="form-control input-sm" name="data_sopir">
-              <option value="" selected="" disabled>Pilih Sopir</option>
-                <?php foreach ($sopir as $s): ?>
-                  <option value="<?php echo $s->uuid_sopir; ?>"><?php echo $s->kode_sopir." - ".$s->nama_lengkap ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-          </div>
-          <br>
-          <div id="trip-data"></div>
-
-      
-
-          <div class="form-group">
-            <div class="col-xs-offset-6 col-lg-6">
-              <button type="button" onclick="save_manifest_data();" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN</button>
-              <button type="button" onclick="save_manifest_data();" name="button" class="btn  bg-purple btn-sm"><i class="fa fa-save"></i> SIMPAN & CETAK</button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
       </div><!-- /.modal-body -->
     </div>
   </div>
 </div><!-- /.modal -->
-<?php $this->load->view('reservasi_shuttle/inc_script/script_manifest');?>

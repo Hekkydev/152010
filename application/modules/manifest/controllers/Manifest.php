@@ -4,14 +4,15 @@
  */
 class Manifest extends MY_Controller
 {
-    
+
     function __construct()
     {
         parent::__construct();
         $this->Authentikasi             = $this->Authentikasi();
         $this->model                    = $this->load->model('manifest_model');
+        $this->library                  = $this->load->library('manifest');
         $this->AllKota                  = $this->AllKota()->result_object();
-        
+
     }
 
     public function index()
@@ -28,21 +29,21 @@ class Manifest extends MY_Controller
             'tanggal_awal'=>$this->waktu_skr(),
             'tanggal_akhir'=>$this->waktu_skr(),
         );
-        if(empty($post)){  
-            $this->data['manifest'] = $this->manifest_model->find_manifest($data_search);
+        if(empty($post)){
+            $this->data['manifest_data'] = $this->manifest_model->find_manifest($data_search);
         }else{
-            $this->data['manifest'] = $this->manifest_model->find_manifest($post);
+            $this->data['manifest_data'] = $this->manifest_model->find_manifest($post);
         }
 
         $this->page_load('manifest/options/list',$this->data);
-        
+
     }
 
     public function operasional_manifest()
     {
-         
-         $this->page_form('manifest/manifest_operasional/page');
+        $data['kota'] = $this->AllKota;
+         $this->page_form('manifest/manifest_operasional/page',$data);
     }
 
-    
+
 }

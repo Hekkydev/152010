@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Reservation Shuttle Library 
+ * Reservation Shuttle Library
  */
-class Cek_kursi
+class Cek_kursi extends General
 {
     var $CI;
-    
+
     function __construct()
     {
         $this->CI =& get_instance();
@@ -45,7 +45,7 @@ class Cek_kursi
                 case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
                     return "icon-bangku-dibayar";
                     break;
-                
+
                 default:// kondisi penumpang kosong
                     return "icon-bangku-kosong";
                     break;
@@ -53,7 +53,7 @@ class Cek_kursi
         }else{
                     return "icon-bangku-kosong"; // kondisi penumpang kosong
         }
-       
+
     }
 
 
@@ -71,7 +71,7 @@ class Cek_kursi
                 case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
                     return "bg-red";
                     break;
-                
+
                 default:// kondisi penumpang kosong
                     return "bg-default btn-outline";
                     break;
@@ -79,7 +79,7 @@ class Cek_kursi
         }else{
                     return "bg-default btn-outline"; // kondisi penumpang kosong
         }
-        
+
     }
 
 
@@ -97,7 +97,7 @@ class Cek_kursi
                         case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
                             return "bg-red";
                             break;
-                        
+
                         default:// kondisi penumpang kosong
                             return "bg-default";
                             break;
@@ -123,7 +123,7 @@ class Cek_kursi
                     case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
                         return "data-id='2' data-penumpang='".$cek->kode_tiket."' data-booking='".$cek->kode_booking."'";
                         break;
-                    
+
                     default:// kondisi penumpang kosong
                         return "data-id='0'";
                         break;
@@ -135,7 +135,7 @@ class Cek_kursi
 
     public function informasi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
-        
+
         $cek = $this->cek_data($kode_jadwal,$tanggal_reservasi,$nomor_kursi);
 
 
@@ -149,7 +149,7 @@ class Cek_kursi
                     case $reservasi_tipe == 2:// kondisi penumpang sudah bayar
                         return "penumpang-dibayar";
                         break;
-                    
+
                     default:// kondisi penumpang kosong
                         return "penumpang-kosong'";
                         break;
@@ -163,15 +163,15 @@ class Cek_kursi
     public function find($kode_jadwal,$tanggal_reservasi,$nomor_kursi)
     {
 
-           
+
            $html  = '';
            $html .= '<div class="penumpang '.$this->informasi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">';
            $html .= '<div class="col-lg-3 passengger'.$nomor_kursi.'" align="center" style="padding:10px  0 20px 0; margin:3px;">';
            $html .= '<div class="icon-bangku '.$this->status_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'" '.$this->data_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).' ><span class="infoSeat '.$this->kursi_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">'.$nomor_kursi.'</span></div>';
            $html .= '<button class="btn-bangku btn btn-xs '.$this->button_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'">'.$this->nama_penumpang($kode_jadwal,$tanggal_reservasi,$nomor_kursi).'</button>';
-           $html .= '</div></div>'; 
+           $html .= '</div></div>';
 
-           return $html;  
+           return $html;
     }
 
 

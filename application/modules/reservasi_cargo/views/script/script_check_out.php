@@ -1,14 +1,24 @@
 <script type="text/javascript">
 $("input[id=telp_pengirim]").keyup(function(){
-            var telp_pengirim = $(this).val(); 
+  if (/\D/g.test(this.value))
+  {
+    this.value = this.value.replace(/\D/g, '');
+  }else{
+            var telp_pengirim = $(this).val();
             var nama_pengirim = $('input[id=nama_pengirim]');
-            cek_customers(telp_pengirim,nama_pengirim);          
+            cek_customers(telp_pengirim,nama_pengirim);
+  }
 });
 
 $("input[id=telp_penerima]").keyup(function(){
-            var telp_penerima = $(this).val(); 
+  if (/\D/g.test(this.value))
+  {
+    this.value = this.value.replace(/\D/g, '');
+  }else{
+            var telp_penerima = $(this).val();
             var nama_penerima = $('input[id=nama_penerima]');
-            cek_customers(telp_penerima,nama_penerima);          
+            cek_customers(telp_penerima,nama_penerima);
+  }
 });
 
 $("select[id=jenis_barang]").ready(function() {
@@ -447,7 +457,7 @@ function cek_customers(nomor,nama)
                 if(object != null)
                 {
                   var object = $.parseJSON(result);
-                  nama.val(object.nama_customers);    
+                  nama.val(object.nama_customers);
                 }else{
                   nama.val("");
                 }

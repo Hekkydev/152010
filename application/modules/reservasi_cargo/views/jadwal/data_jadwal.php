@@ -40,7 +40,7 @@
 
 
   </script>
-  <div class="form-group" align="center">
+  <div class="form-group" align="center" id="cek-waktu-jadwal">
     <a class="time_show click  btn bg-purple btn-sm">Tampilkan Keseluruhan Jam</a>
   </div>
   <hr>

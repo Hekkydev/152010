@@ -119,7 +119,7 @@ if(!function_exists('ChekRowsJadwal')):
 
       if($Data == TRUE){
         if($Data->uuid_mobil_unit == TRUE){
-          return $DATA_mobil  = '<span class="config-blue">'.$Data->kode_unit." ".$Data->no_plat." | ".$Data->merek." ".$Data->jenis.'</span>';
+          return $DATA_mobil  = '<span class="config-blue">'.$Data->kode_unit." ".$Data->no_plat.'</span>';
         }else{
           return $Data = "<span class='config'>BELUM DI ATUR</span>";
         }
@@ -138,7 +138,7 @@ if(!function_exists('ChekRowsJadwal')):
 
       if($Data == TRUE){
         if($Data->uuid_sopir == TRUE){
-          return $DATA_sopir  = '<span class="config-blue">'.$Data->kode_sopir." | ".$Data->nama_lengkap.'</span>';
+          return $DATA_sopir  = '<span class="config-blue">'.$Data->nama_lengkap.'</span>';
         }else{
           return $Data = "<span class='config'>BELUM DI ATUR</span>";
         }

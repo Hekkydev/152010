@@ -18,9 +18,9 @@ class Reservasi_shuttle extends MY_Controller{
   function index()
   {
 
+
+
             $data['diskon']               =   $this->Shuttle_Diskon();
-            $data['mobil']                =   $this->AllMobil->result_object();
-            $data['sopir']                =   $this->AllSopir->result_object();
             $data['kota']                 =   $this->AllKota->result_object();
 
             //$this->print_data($data);
@@ -312,7 +312,7 @@ function pembatalan_tiket()
               'id_status_pemesanan_shuttle'=>3, // nomor 3 di batalkan
               'deleted_date'=>$this->waktu_skr(),
             );
-            
+
             $this->db->where('p_reservasi_shuttle_fix.kode_tiket', $kode_tiket);
             $update = $this->db->update('p_reservasi_shuttle_fix',$data);
             if($update == TRUE)
@@ -404,32 +404,108 @@ function pembatalan_tiket()
             $this->load->view('reservasi_shuttle/checkout/modal-metode-pembayaran');
   }
 
+
+
+
+// -----------------MANIFEST TRIP---------------------------------------------------------------------//
+
   function manifest_trip()
   {
             $this->load->library(array('manifest'));
-            $post = (object) $_POST;            
-            $data['manifest'] = $this->manifest->biaya_trip_jurusan($post->asal,$post->tujuan);
+            $post = (object) $_POST;
+            $data['mobil']                =   $this->AllMobil->result_object();
+            $data['sopir']                =   $this->AllSopir->result_object();
+            $data['manifest_kode'] = $this->manifest->find_manifest_kode($post->kode_manifest);
             $data['jumlah_penumpang'] = $this->manifest->cek_jumlah_penumpang_trip($post->kode_manifest);
+            //CEK MANIFEST DI TABLE MANIFEST
+            if($data['manifest_kode'] == TRUE){
+              // BIAYA DIAMBIL DARI DATA TRIP MANIFEST YANG DISIMPAN
+              $data['biaya_trip'] = $this->biaya_manifest_trip_table_manifest_data($post);
+            }else{
+              // BIAYA DIAMBIL DARI JURUSAN
+              $data['manifest'] = $this->manifest->biaya_trip_jurusan($post->asal,$post->tujuan);
+              $data['biaya_trip'] = $this->biaya_manifest_trip_jurusan($post);
+            }
+
+
             $this->page_load('reservasi_shuttle/jadwal/manifest_trip',$data);
+
+  }
+  function biaya_manifest_trip_table_manifest_data($post)
+  {
+            // BIAYA DIAMBIL DARI DATA TRIP MANIFEST YANG DISIMPAN
+          $biaya_trip = $this->manifest->find_manifest_kode($post->kode_manifest);
+          $jumlah_penumpang = $this->manifest->cek_jumlah_penumpang_trip($post->kode_manifest);
+          $data['biaya_trip'] = 0;
+          if($jumlah_penumpang > 0):
+            return $data['biaya_trip'] = $biaya_trip->biaya_tol + $biaya_trip->biaya_sopir + $biaya_trip->biaya_bbm;
+          else:
+            return $data['biaya_trip'] = $biaya_trip->biaya_perpal;
+          endif;
+  }
+  function biaya_manifest_trip_jurusan($post)
+  {
+          // BIAYA DIAMBIL DARI JURUSAN
+          $biaya_trip = $this->manifest->biaya_trip_jurusan($post->asal,$post->tujuan);
+          $jumlah_penumpang = $this->manifest->cek_jumlah_penumpang_trip($post->kode_manifest);
+          $data['biaya_trip'] = 0;
+          if($jumlah_penumpang > 0):
+            return $data['biaya_trip'] = $biaya_trip->biaya_tol + $biaya_trip->biaya_sopir + $biaya_trip->biaya_bbm;
+          else:
+            return $data['biaya_trip'] = $biaya_trip->biaya_perpal;
+          endif;
   }
 
   function save_manifest_data()
   {
             $this->load->library(array('manifest'));
             $post = (object) $_POST;
-           
-            $data = array(
-              'kode_manifest'=>$post->kode_manifest,
+            if($post->jumlah_penumpang == 0){
+              $data = array(
+                'kode_manifest'=>$post->kode_manifest,
+                'uuid_sopir'=>$post->uuid_sopir,
+                'uuid_mobil_unit'=>$post->uuid_mobil_unit,
+                'tanggal_cetak_manifest_shuttle'=>$this->waktu_skr,
+                'uuid_user_cetak_manifest_shuttle'=>$post->uuid_user,
+                'kode_jadwal'=>$post->kode_jadwal,
+                'biaya_perpal'=>$post->biaya_perpal,
+                'tanggal_reservasi'=>$post->tanggal_reservasi,
+                'created_date'=>$this->waktu_skr,
+              );
+            }else{
+              $data = array(
+                'kode_manifest'=>$post->kode_manifest,
+                'uuid_sopir'=>$post->uuid_sopir,
+                'uuid_mobil_unit'=>$post->uuid_mobil_unit,
+                'tanggal_cetak_manifest_shuttle'=>$this->waktu_skr,
+                'uuid_user_cetak_manifest_shuttle'=>$post->uuid_user,
+                'kode_jadwal'=>$post->kode_jadwal,
+                'biaya_sopir'=>$post->biaya_sopir,
+                'biaya_bbm'=>$post->biaya_bbm,
+                'biaya_tol'=>$post->biaya_tol,
+                'tanggal_reservasi'=>$post->tanggal_reservasi,
+                'created_date'=>$this->waktu_skr,
+              );
+            }
+
+            $request_data_sopir = array(
+              'kode_jadwal' =>$post->kode_jadwal,
+              'tanggal_reservasi'=>$post->tanggal_reservasi,
               'uuid_sopir'=>$post->uuid_sopir,
-              'uuid_mobil_unit'=>$post->uuid_mobil_unit,
-              'tanggal_cetak_manifest'=>$this->waktu_skr,
-              'kode_jadwal'=>$post->kode_jadwal,
-              'created_date'=>$this->waktu_skr,
+              'uuid_user'=>$post->uuid_user,
             );
-           
+            $request_data_mobil = array(
+              'kode_jadwal' =>$post->kode_jadwal,
+              'tanggal_reservasi'=>$post->tanggal_reservasi,
+              'uuid_mobil_unit'=>$post->uuid_mobil_unit,
+              'uuid_user'=>$post->uuid_user,
+            );
+
             $save = $this->manifest->save_manifest_data($data);
             if($save == TRUE)
             {
+              $this->penjadwalan->save_data_sopir($request_data_sopir);
+              $this->penjadwalan->save_data_mobil($request_data_mobil);
               echo "success";
             }else{
               echo "error";

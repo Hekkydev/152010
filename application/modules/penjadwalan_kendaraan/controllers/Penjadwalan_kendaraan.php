@@ -75,35 +75,17 @@ class Penjadwalan_kendaraan extends MY_Controller{
           $data['tgl_setup'] = $this->input->post('tgl_setup');
           $data['uuid_mobil_unit'] = $this->input->post('uuid_mobil_unit');
           $data['uuid_user'] = $this->UUID_user();
-
-          $data_config_insert = array(
-            'kode_jadwal_kendaraan' =>$data['kode_jadwal'],
-            'uuid_user'=>$data['uuid_user'],
-            'uuid_mobil_unit'=>$data['uuid_mobil_unit'],
-            'tanggal_jadwal_kendaraan'=>$data['tgl_setup'],
-            'id_status'=>1,
-            'created_date'=>$this->waktu_skr,
+          $request_data_mobil = array(
+            'kode_jadwal' =>$this->input->post('kode_jadwal'),
+            'tanggal_reservasi'=>$this->input->post('tgl_setup'),
+            'uuid_mobil_unit'=>$this->input->post('uuid_mobil_unit'),
+            'uuid_user'=>$this->UUID_user(),
           );
 
-          $kode_jadwal = $data['kode_jadwal'];
-          $tgl_setup   = $data['tgl_setup'];
-          $check_row = $this->jadwal_model->check_jadwal_kendaraan($kode_jadwal,$tgl_setup)->num_rows();
-
-          $data_config_update = array(
-            'uuid_user'=>$data['uuid_user'],
-            'uuid_mobil_unit'=>$data['uuid_mobil_unit'],
-            'last_change_date'=>$this->waktu_skr,
-          );
-          if($check_row > 0):
-            //update
-            $update_at_p_jadwal_kendaraan = $this->jadwal_model->update_config_mobil($data_config_update,$kode_jadwal,$tgl_setup);
+          $setup_mobil = $this->penjadwalan->save_data_mobil($request_data_mobil);
+          if($setup_mobil){
             echo "Berhasil Mengatur Jadwal Kendaraan";
-          else:
-            //insert
-            $insert_to_p_jadwal_kendaraan = $this->jadwal_model->insert_config_mobil($data_config_insert);
-            echo "Berhasil Menyeting  Jadwal Kendaraan";
-          endif;
-
+          }
 
   }
 
@@ -114,36 +96,17 @@ class Penjadwalan_kendaraan extends MY_Controller{
           $data['uuid_sopir'] = $this->input->post('uuid_sopir');
           $data['uuid_user'] = $this->UUID_user();
 
-
-          $data_config_insert = array(
-            'kode_jadwal_kendaraan' =>$data['kode_jadwal'],
-            'uuid_user'=>$data['uuid_user'],
-            'uuid_sopir'=>$data['uuid_sopir'],
-            'tanggal_jadwal_kendaraan'=>$data['tgl_setup'],
-            'id_status'=>1,
-            'created_date'=>$this->waktu_skr,
+          $request_data_sopir = array(
+            'kode_jadwal' =>$this->input->post('kode_jadwal'),
+            'tanggal_reservasi'=>$this->input->post('tgl_setup'),
+            'uuid_sopir'=>$this->input->post('uuid_sopir'),
+            'uuid_user'=>$this->UUID_user(),
           );
 
-          $kode_jadwal = $data['kode_jadwal'];
-          $tgl_setup   = $data['tgl_setup'];
-          $check_row = $this->jadwal_model->check_jadwal_sopir($kode_jadwal,$tgl_setup)->num_rows();
-
-          $data_config_update = array(
-            'uuid_user'=>$data['uuid_user'],
-            'uuid_sopir'=>$data['uuid_sopir'],
-            'last_change_date'=>$this->waktu_skr,
-          );
-
-          if($check_row > 0):
-            //update
-            $update_at_p_jadwal_kendaraan = $this->jadwal_model->update_config_sopir($data_config_update,$kode_jadwal,$tgl_setup);
-            echo "Berhasil Mengatur Jadwal Sopir";
-          else:
-            //insert
-            $insert_to_p_jadwal_kendaraan = $this->jadwal_model->insert_config_sopir($data_config_insert);
-            echo "Berhasil Menyeting  Jadwal Sopir";
-          endif;
-
+          $setup_sopir = $this->penjadwalan->save_data_sopir($request_data_sopir);
+          if($setup_sopir){
+            echo "Berhasil Mengatur Jadwal Kendaraan";
+          }
 
   }
 

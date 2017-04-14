@@ -101,5 +101,11 @@ class Sopir_model extends CI_Model
     return $q = $this->db->update('p_sopir',$data);
   }
 
+  function cek_uuid_sopir($uuid_sopir)
+  {
+    $this->db->where('uuid_sopir', $uuid_sopir);
+    return $this->db->get('p_sopir')->first_row();
+  }
+
 
 }

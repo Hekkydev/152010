@@ -46,7 +46,7 @@ class MY_Controller extends CI_Controller{
                             'manifest_helper',
                         );
 
-  public $library = array(  
+  public $library = array(
                             'session',
                             'encrypt',
                             'form_validation',
@@ -55,6 +55,8 @@ class MY_Controller extends CI_Controller{
 							              'security',
                             'general',
                             'cek_kursi',
+                            'manifest',
+                            'penjadwalan',
 
                         );
 
@@ -525,7 +527,7 @@ class MY_Controller extends CI_Controller{
           $data['siteTitle'] = $this->title;
           $data['title'] = $this->title_page($this->title_page);
           $data['footer_title'] = $this->footer_title;
-          
+
           $data['css'] = $this->load->view('template_part_global/css',$data,TRUE);
           $data['header'] = $this->load->view('template_part_global/header',$data,TRUE);
           $data['loading'] = $this->load->view('template_part_global/loading',$data,TRUE);

@@ -158,4 +158,12 @@ class Mobil_model extends CI_Model
     $this->db->where($this->mobil_id,$id);
     return $q = $this->db->update($this->mobil,$data);
   }
+
+  function cek_uuid_mobil($uuid_mobil)
+  {
+    $this->db->where('uuid_mobil_unit', $uuid_mobil);
+    $query = $this->db->get($this->mobil)->first_row();
+
+    return $query;
+  }
 }
