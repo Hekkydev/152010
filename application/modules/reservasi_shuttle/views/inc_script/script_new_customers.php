@@ -8,15 +8,24 @@ $("input#kode_member").keyup(function(){
 });
 
 
+
 $("#no_handphone").keyup(function(){
 
-    if ($(this).val() == null || $(this).val() == "") {
-        reset_checking();
-    }else {
-        cek_nomor_handphone($(this).val());
+    if (/\D/g.test(this.value))
+    {
+      this.value = this.value.replace(/\D/g, '');
+    }else{
+      if ($(this).val() == null || $(this).val() == "") {
+          reset_checking();
+      }else {
+          cek_nomor_handphone($(this).val());
+      }
     }
 
+
 });
+
+
 
 function cek_kode_member(e)
 {
@@ -62,7 +71,7 @@ function cek_kode_member_display(e)
              $("input[id=nama_depan]").val(customer.nama_depan).attr('readonly','true');
              $("#no_handphone").val(customer.no_handphone).attr('readonly','true');
           }
-            
+
         });
 
 
