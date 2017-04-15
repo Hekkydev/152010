@@ -27,7 +27,7 @@
                       <td><?php echo $no; ?></td>
                       <td><?php echo $m->tanggal_reservasi.' '. $m->jam.':'.$m->menit?></td>
                       <td><?php echo $m->kode_jadwal; ?></td>
-                      <td><?php echo "$m->created_date";?></td>
+                      <td><?php echo $this->general->cek_tanggal_keberangkatan($m->kode_manifest);?></td>
                       <td><?php  ?></td>
                       <td><?php echo $m->kode_manifest; ?></td>
                       <td><?php echo $this->general->cek_uuid_sopir($m->uuid_sopir) ?></td>

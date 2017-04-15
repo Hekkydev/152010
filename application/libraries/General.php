@@ -86,6 +86,13 @@ class General
       return count($Q->result_object());
     }
 
+    public function cek_tanggal_keberangkatan($kode_manifest)
+    {
+      $this->CI->load->model($this->m_manifest);
+      $Q = $this->CI->manifest_model->cek_tanggal_keberangkatan($kode_manifest);
+      return $Q;
+    }
+
 
 }
 
